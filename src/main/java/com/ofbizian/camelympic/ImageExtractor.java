@@ -13,11 +13,13 @@ public class ImageExtractor implements Processor {
         if (mediaEntities != null) {
             for (MediaEntity mediaEntity : mediaEntities) {
                 exchange.getIn().setBody(
-                        status.getUser().getScreenName() + ";" +
-                                status.getText() + ";" +
-                                mediaEntity.getMediaURL().toString() + ";" +
-                                mediaEntity.getSizes().get(3).getWidth() + ";" +
-                                mediaEntity.getSizes().get(3).getHeight());
+                        new Tweet()
+                                .withName(status.getUser().getScreenName())
+                                .withText(status.getText())
+                                .withImageUrl(mediaEntity.getMediaURL().toString())
+                                .withWidth(mediaEntity.getSizes().get(3).getWidth())
+                                .withHeight(mediaEntity.getSizes().get(3).getHeight())
+                );
 
                 exchange.getIn()
                         .setHeader(CamelympicsRoute.UNIQUE_IMAGE_URL, mediaEntity.getMediaURL().toString());

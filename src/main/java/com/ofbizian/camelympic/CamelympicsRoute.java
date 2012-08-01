@@ -16,15 +16,11 @@
  */
 package com.ofbizian.camelympic;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.twitter.TwitterComponent;
 import org.apache.camel.component.websocket.WebsocketComponent;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
-
-import twitter4j.MediaEntity;
-import twitter4j.Status;
 
 public class CamelympicsRoute extends RouteBuilder {
     public static final String UNIQUE_IMAGE_URL = "UNIQUE_IMAGE_URL";
@@ -57,7 +53,7 @@ public class CamelympicsRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         WebsocketComponent wc = getContext().getComponent("websocket", WebsocketComponent.class);
-        wc.setPort(9090);
+        wc.setPort(8080);
         wc.setStaticResources("classpath:.");
 
         TwitterComponent tc = getContext().getComponent("twitter", TwitterComponent.class);
@@ -72,13 +68,17 @@ public class CamelympicsRoute extends RouteBuilder {
 
                 .process(new ImageExtractor())
 
-                .filter(header(UNIQUE_IMAGE_URL).isNotNull())
+                .process(new Statistics())
 
-                .idempotentConsumer(header(UNIQUE_IMAGE_URL), MemoryIdempotentRepository.memoryIdempotentRepository(1000))
+                .filter(body().isInstanceOf(Tweet.class))
+
+                .idempotentConsumer(header(UNIQUE_IMAGE_URL), MemoryIdempotentRepository.memoryIdempotentRepository(10000))
 
                 .to("log:imageStream?level=INFO&groupInterval=60000&groupDelay=60000&groupActiveOnly=false")
 
                 .throttle(1).timePeriodMillis(5000).asyncDelayed().callerRunsWhenRejected(false)
+
+                .marshal().json(JsonLibrary.Jackson)
 
                 .to("websocket:camelympics?sendToAll=true");
     }
