@@ -4,11 +4,8 @@ public class Tweet {
     private String name;
     private String text;
     private String url;
-    private int width;
-    private int height;
     private long tweetCount;
     private long imageCount;
-    private long startDate;
 
     public Tweet withName(String name) {
         this.name = name;
@@ -25,16 +22,6 @@ public class Tweet {
         return this;
     }
 
-    public Tweet withWidth(int width) {
-        this.width = width;
-        return this;
-    }
-
-    public Tweet withHeight(int height) {
-        this.height = height;
-        return this;
-    }
-
     public Tweet withCount(long tweetCount) {
         this.tweetCount = tweetCount;
         return this;
@@ -45,25 +32,12 @@ public class Tweet {
         return this;
     }
 
-    public Tweet withStartDate(long startDate) {
-        this.startDate = startDate;
-        return this;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public long getImageCount() {
         return imageCount;
     }
 
     public String getName() {
         return name;
-    }
-
-    public long getStartDate() {
-        return startDate;
     }
 
     public String getText() {
@@ -76,9 +50,5 @@ public class Tweet {
 
     public String getUrl() {
         return url;
-    }
-
-    public int getWidth() {
-        return width;
     }
 }

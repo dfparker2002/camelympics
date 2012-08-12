@@ -17,12 +17,9 @@ public class ImageExtractor implements Processor {
                                 .withName(status.getUser().getScreenName())
                                 .withText(status.getText())
                                 .withImageUrl(mediaEntity.getMediaURL().toString())
-                                .withWidth(mediaEntity.getSizes().get(3).getWidth())
-                                .withHeight(mediaEntity.getSizes().get(3).getHeight())
                 );
 
-                exchange.getIn()
-                        .setHeader(CamelympicsRoute.UNIQUE_IMAGE_URL, mediaEntity.getMediaURL().toString());
+                exchange.getIn().setHeader(CamelympicsRoute.UNIQUE_IMAGE_URL, mediaEntity.getMediaURL().toString());
                 break; //grab only the first image
             }
         }

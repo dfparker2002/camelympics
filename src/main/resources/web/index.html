@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title>Camelympics - Live #Olympics Image Stream</title>
+    <meta name="description" lang="en" content="Camelympics - Live #Olympics Image Stream"/>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Fredoka+One|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div id="content">
+    <div id="overview">
+        <h2>Live <span id="olympic">#Olympics</span> Image Stream
+            &nbsp;&nbsp;<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fbit.ly%2Fcamelympics&amp;send=false&amp;layout=button_count&amp;width=30&amp;show_faces=false&amp;action=like&amp;colorscheme=dark&amp;font=arial&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://bit.ly/olympictures" data-text="Live #Olympics Image Stream" data-hashtags="olympics">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </h2>
+        So far processed <span id="tweetCount">LOADING</span> tweets and <span id="imageCount">LOADING</span> images
+    </div>
+    <div class="section" id="pictures">
+        <div class="imageRow">
+            <div id="1" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="2" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="3" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="4" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+        </div>
+        <div class="imageRow">
+            <div id="5" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="6" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="7" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="8" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+        </div>
+        <div class="imageRow">
+            <div id="9" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="10" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="11" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+            <div id="12" class="single">
+                <a href="#"><img src="http://www.savethestudent.org/uploads/London_2012_Free_Olympic_Events-150x150.gif"/></a>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        Powered by <a href="http://camel.apache.org/" target="_blank">Apache Camel</a>. Created by <a href="http://www.ofbizian.com/2012/08/olympics-image-loader-powered-by-camel.html" target="_blank">OFBIZian</a> using only free stuff.
+        <div id="disclaimer"><em>No pennies have been spent in the making or running of this website.</em></div>
+    </div>
+</div>
+
+<script src="js/lightbox.js"></script>
+<script type="text/javascript">
+    var index = 0;
+    $(window).keydown(function (event) {
+        if (event.which == 27) {
+            // the following seems to fix the symptom but only in case the document has the focus
+            // prevents websocket ESC bug
+            event.preventDefault();
+        }
+    });
+
+    $(document).ready(function () {
+        if (!window.WebSocket) {
+            $('#pictures').text("ERROR: Your browser doesn't support websockets!");
+        } else {
+            app.start();
+        }
+    });
+
+    function updateImage(tweet) {
+        var localIndex = 1;
+        if (index >= 12) {
+            index = 1;
+        } else {
+            index++;
+            localIndex = index;
+        }
+
+        $('#' + localIndex + ' a').addClass('loading');
+        var imageUrl = tweet.url + ':thumb';
+        var image = $('<img />')
+                .load(function () {
+                    $('#' + localIndex).html('<a title="@' + tweet.name + ':' + tweet.text + '" rel="lightbox" href="' + tweet.url + '"><img src="' + imageUrl + '" /></a>');
+                    $('#' + localIndex + ' a').removeClass('loading');
+                })
+                .error(function () {
+                    $('#' + localIndex + ' a').removeClass('loading');
+                    //console.log("error loading " + imageUrl);
+                })
+
+                .attr('src', imageUrl);
+    }
+
+    function setStats(tweet) {
+        $('#tweetCount').text(tweet.tweetCount);
+        $('#imageCount').text(tweet.imageCount);
+    }
+
+    function gallery(data) {
+        var tweet = jQuery.parseJSON(data);
+        setStats(tweet);
+        updateImage(tweet);
+    }
+
+
+    var app = {
+        start:function () {
+            var location = "ws://localhost:8080/camelympics";
+            this._ws = new WebSocket(location);
+            this._ws.onmessage = this._onmessage;
+            this._ws.onclose = this._onclose;
+        },
+
+        _onmessage:function (m) {
+            if (m.data) {
+                gallery(m.data);
+            }
+        },
+
+        _onclose:function (m) {
+            this._ws = null;
+            //setTimeout("app.start();", 100);
+        }
+
+    };
+</script>
+</body>
+</html>
