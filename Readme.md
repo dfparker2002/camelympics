@@ -11,7 +11,7 @@ Then visit http://localhost:8080
 
 ## Showcase
 
-You can find a demo running [here](http://bit.ly/olympictures)
+You can see an improved version running on [livephotostream.com](http://livephotostream.com)
 
 ## Read about the app on my [blog](http://www.ofbizian.com/2012/08/olympics-image-loader-powered-by-camel.html)
 
