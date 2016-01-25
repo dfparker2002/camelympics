@@ -7,8 +7,8 @@ public final class MainApp {
     public static void main(String[] args) throws Exception {
         System.out.println("\n\n\n\n");
         System.out.println("===============================================");
-        System.out.println("Open your web browser on http://localhost");
-        System.out.println("Press ctrl+c to stop this example");
+        System.out.println("Open your web browser on http://localhost:8080");
+        System.out.println("Press ctrl+c to stop this application");
         System.out.println("===============================================");
         System.out.println("\n\n\n\n");
 

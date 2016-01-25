@@ -27,13 +27,15 @@ public class CamelympicsRoute extends RouteBuilder {
 
                 .filter(body().isInstanceOf(Tweet.class))
 
-                .idempotentConsumer(header(UNIQUE_IMAGE_URL),
-                        MemoryIdempotentRepository.memoryIdempotentRepository(10000))
+                .idempotentConsumer(header(UNIQUE_IMAGE_URL), MemoryIdempotentRepository.memoryIdempotentRepository(10000))
 
                 .to("log:imageStream?level=INFO&groupInterval=60000&groupDelay=60000&groupActiveOnly=false")
 
                 .marshal().json(JsonLibrary.Jackson)
 
-                .to("websocket:camelympics?sendToAll=true&port=8080&staticResources=classpath:web/.");
+                .convertBodyTo(String.class)
+
+                .to("websocket://localhost:8080/camelympics?sendToAll=true&staticResources=classpath:web/.");
+
     }
 }
