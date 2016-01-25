@@ -6,13 +6,12 @@
 
     <groupId>com.ofbizian</groupId>
     <artifactId>camelympics</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>A Camel application for streaming photos form twitter</name>
     <url>http://www.ofbizian.com</url>
 
     <properties>
-        <!--<camel.version>2.16.2</camel.version>-->
         <camel.version>2.15.5</camel.version>
     </properties>
 
@@ -74,7 +73,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <configuration>
-                    <mainClass>com.ofbizian.camelympic.MainApp</mainClass>
+                    <mainClass>com.ofbizian.camelympics.MainApp</mainClass>
                     <includePluginDependencies>false</includePluginDependencies>
                 </configuration>
             </plugin>
@@ -88,7 +87,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.ofbizian.camelympic.MainApp</mainClass>
+                            <mainClass>com.ofbizian.camelympics.MainApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

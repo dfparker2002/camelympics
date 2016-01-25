@@ -1,4 +1,4 @@
-package com.ofbizian.camelympic;
+package com.ofbizian.camelympics;
 
 import org.apache.camel.main.Main;
 

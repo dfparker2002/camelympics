@@ -6,10 +6,14 @@ Apache Camel powered app that displays twitter images near real time.
 Update app.properties with your [Twitter application keys](https://dev.twitter.com/apps/new) and set the search terms.
 
 ## How to run
-Compile and run the app with: mvn
+Compile and run the app with the following command: mvn
 Then visit http://localhost:8080
 
 ## Read about the app on my [blog](http://www.ofbizian.com/2012/08/olympics-image-loader-powered-by-camel.html)
+
+![A screenshot](http://4.bp.blogspot.com/-w41EsCT_Jow/UCeieWuFVPI/AAAAAAAAAEs/CpUhuCPjrOw/s320/shot.jpg)
+
+
 
 ## License
 

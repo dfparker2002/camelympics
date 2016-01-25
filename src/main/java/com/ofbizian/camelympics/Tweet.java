@@ -1,4 +1,4 @@
-package com.ofbizian.camelympic;
+package com.ofbizian.camelympics;
 
 public class Tweet {
     private String name;
