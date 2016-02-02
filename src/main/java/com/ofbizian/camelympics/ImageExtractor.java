@@ -10,7 +10,7 @@ public class ImageExtractor implements Processor {
     public void process(Exchange exchange) throws Exception {
         Status status = exchange.getIn().getBody(Status.class);
         MediaEntity[] mediaEntities = status.getMediaEntities();
-        if (mediaEntities != null) {
+        if (mediaEntities != null && !status.isPossiblySensitive()) {
             for (MediaEntity mediaEntity : mediaEntities) {
                 exchange.getIn().setBody(
                         new Tweet()
