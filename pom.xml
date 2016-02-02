@@ -3,16 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.ofbizian</groupId>
     <artifactId>camelympics</artifactId>
     <version>1.0</version>
 
-    <name>A Camel application for streaming photos form twitter</name>
+    <name>A Camel based application for streaming photos form twitter</name>
     <url>http://www.ofbizian.com</url>
 
     <properties>
         <camel.version>2.15.5</camel.version>
+        <jetty.host>${docker.host.address}</jetty.host>
+        <jetty.port>8080</jetty.port>
     </properties>
 
     <dependencies>
@@ -36,27 +37,16 @@
             <artifactId>camel-jackson</artifactId>
             <version>${camel.version}</version>
         </dependency>
-
-        <!-- logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
+            <version>1.7.13</version>
         </dependency>
     </dependencies>
 
     <build>
         <defaultGoal>clean compile exec:java</defaultGoal>
+        <finalName>${artifactId}</finalName>
 
         <plugins>
             <plugin>
@@ -90,6 +80,8 @@
                             <mainClass>com.ofbizian.camelympics.MainApp</mainClass>
                         </manifest>
                     </archive>
+                    <finalName>${artifactId}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
                     <execution>
@@ -100,6 +92,49 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jolokia</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.13.8</version>
+                <configuration>
+                    <logDate>default</logDate>
+                    <autoPull>true</autoPull>
+                    <images>
+                        <image>
+                            <alias>camelympics</alias>
+                            <name>bibryam/${project.artifactId}:${project.version}</name>
+                            <build>
+                                <cleanup>false</cleanup>
+                                <from>java:8u40</from>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                                <cmd>
+                                    <shell>
+                                        java -jar /maven/camelympics.jar
+                                    </shell>
+                                </cmd>
+                            </build>
+                            <run>
+                                <ports>
+                                    <port>${jetty.port}:8080</port>
+                                </ports>
+                                <wait>
+                                    <url>http://${jetty.host}:${jetty.port}</url>
+                                    <time>10000</time>
+                                </wait>
+                                <log>
+                                    <color>cyan</color><prefix>CML</prefix>
+                                </log>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
             </plugin>
         </plugins>
     </build>

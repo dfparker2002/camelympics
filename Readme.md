@@ -5,15 +5,19 @@ Apache Camel powered app that displays twitter images near real time.
 ## How to setup
 Update app.properties with your [Twitter application keys](https://dev.twitter.com/apps/new) and set the search terms.
 
-## How to run
+## How to run through Maven
 Compile and run the app with the following command: mvn
 Then visit http://localhost:8080
 
+## How to run through Docker
+Build a docker image with the following command: mvn package docker:build
+Run a Docker container: mvn docker:start
+Then visit http://docker_host:8080
+Stop the Docker container: mvn docker:stop
+
 ## Read about the app on my [blog](http://www.ofbizian.com/2012/08/olympics-image-loader-powered-by-camel.html)
 
-![A screenshot](http://4.bp.blogspot.com/-w41EsCT_Jow/UCeieWuFVPI/AAAAAAAAAEs/CpUhuCPjrOw/s320/shot.jpg)
-
-
+![A screenshot of the application](http://4.bp.blogspot.com/-w41EsCT_Jow/UCeieWuFVPI/AAAAAAAAAEs/CpUhuCPjrOw/s320/shot.jpg)
 
 ## License
 
