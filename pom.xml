@@ -11,9 +11,8 @@
     <url>http://www.ofbizian.com</url>
 
     <properties>
-        <camel.version>2.15.5</camel.version>
-        <jetty.host>${docker.host.address}</jetty.host>
-        <jetty.port>8080</jetty.port>
+        <camel.version>2.16.2</camel.version>
+        <docker.port>8080</docker.port>
     </properties>
 
     <dependencies>
@@ -108,6 +107,7 @@
                             <build>
                                 <cleanup>false</cleanup>
                                 <from>java:8u40</from>
+                                <maintainer>bibryam</maintainer>
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
@@ -116,16 +116,16 @@
                                 </ports>
                                 <cmd>
                                     <shell>
-                                        java -jar /maven/camelympics.jar
+                                        java -Djava.security.egd=file:/dev/./urandom -Dfoo=${bilgin} -DconsumerKey=${consumerKey}  -DconsumerSecret=${consumerSecret} -DaccessToken=${accessToken} -DaccessTokenSecret=${accessTokenSecret} -DsearchTerm=${searchTerm} -Dbilgin=${foo} -jar /maven/camelympics.jar
                                     </shell>
                                 </cmd>
                             </build>
                             <run>
                                 <ports>
-                                    <port>${jetty.port}:8080</port>
+                                    <port>${docker.port}:8080</port>
                                 </ports>
                                 <wait>
-                                    <url>http://${jetty.host}:${jetty.port}</url>
+                                    <url>http://${docker.host.address}:${docker.port}</url>
                                     <time>10000</time>
                                 </wait>
                                 <log>
