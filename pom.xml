@@ -136,6 +136,15 @@
                     </images>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>io.hawt</groupId>
+                <artifactId>hawtio-maven-plugin</artifactId>
+                <version>1.4.60</version>
+                <configuration>
+                    <port>8090</port>
+                    <mainClass>com.ofbizian.camelympics.MainApp</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

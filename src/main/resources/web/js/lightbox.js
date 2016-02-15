@@ -50,6 +50,7 @@ lightbox = new Lightbox options
     function LightboxOptions() {
       this.fileLoadingImage = 'images/loading.gif';
       this.fileCloseImage = 'images/close.png';
+      this.filePreviewImage = 'images/twitter.png';
       this.resizeDuration = 700;
       this.fadeDuration = 500;
       this.labelImage = "Image";
@@ -120,6 +121,11 @@ lightbox = new Lightbox options
       })), $('<div/>', {
         "class": 'lb-closeContainer'
       }).append($('<a/>', {
+          "class": 'lb-preview',
+          "target": '_blank'
+      }).append($('<img/>', {
+          src: this.options.filePreviewImage
+      }))).append($('<a/>', {
         "class": 'lb-close'
       }).append($('<img/>', {
         src: this.options.fileCloseImage
@@ -149,6 +155,11 @@ lightbox = new Lightbox options
         _this.end();
         return false;
       });
+      $lightbox.find('.lb-loader, .lb-preview').on('click', function(e) {
+        //_this.end();
+        window.open($(this).attr('href'), '_blank');
+        return false;
+      });
     };
 
     Lightbox.prototype.start = function($link) {
@@ -163,7 +174,9 @@ lightbox = new Lightbox options
       if ($link.attr('rel') === 'lightbox') {
         this.album.push({
           link: $link.attr('href'),
-          title: $link.attr('title')
+          title: $link.attr('title'),
+          targeturl: $link.attr('targeturl')
+
         });
       } else {
         _ref = $($link.prop("tagName") + '[rel="' + $link.attr('rel') + '"]');
@@ -171,7 +184,8 @@ lightbox = new Lightbox options
           a = _ref[i];
           this.album.push({
             link: $(a).attr('href'),
-            title: $(a).attr('title')
+            title: $(a).attr('title'),
+            targeturl: $(a).attr('targeturl')
           });
           if ($(a).attr('href') === $link.attr('href')) imageNumber = i;
         }
@@ -276,6 +290,9 @@ lightbox = new Lightbox options
       $lightbox = $('#lightbox');
       if (typeof this.album[this.currentImageIndex].title !== 'undefined' && this.album[this.currentImageIndex].title !== "") {
         $lightbox.find('.lb-caption').html(this.album[this.currentImageIndex].title).fadeIn('fast');
+      }
+      if (typeof this.album[this.currentImageIndex].targeturl !== 'undefined' && this.album[this.currentImageIndex].targeturl !== "") {
+        $lightbox.find('.lb-preview').attr('href', "https://" + this.album[this.currentImageIndex].targeturl);
       }
       if (this.album.length > 1) {
         $lightbox.find('.lb-number').html(this.options.labelImage + ' ' + (this.currentImageIndex + 1) + ' ' + this.options.labelOf + '  ' + this.album.length).fadeIn('fast');

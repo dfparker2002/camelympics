@@ -11,6 +11,7 @@ If you have Maven and Git installed that is the easiest way to run this applicat
 Clone the project and update `app.properties` as described below.  
 Then compile and run the app with the following command: `mvn clean compile exec:java`   
 Then go to *[http://localhost:8080](http://localhost:8080)*  
+Or customize the number of previews (4x4 by default) to 10x10 as following: *[http://localhost:8080?rows=10&cols=10](http://localhost:8080?rows=10&cols=10)*  
 
 ### How to run with Docker
 If you have a docker installed, you can directly poll the docker image from *[Docker Hub](https://hub.docker.com/r/bibryam/camelympics/)* and run the application without compiling.  
@@ -27,6 +28,7 @@ docker run
 ```
 
 Then go to *[http://DOCKER_HOST:8080](http://DOCKER_HOST:8080)*   
+Or customize the number of previews (4x4 by default) to 10x10 as following: *[http://localhost:8080?rows=10&cols=10](http://localhost:8080?rows=10&cols=10)*  
 
 ### How to run with Maven Docker Plugin
 An alternative flow is to build your docker image using Maven plugin. Clone the project, update `app.properties`  and then build docker images through the configured maven plugin: `mvn package docker:build`  
@@ -34,6 +36,7 @@ Run the Docker container through maven plugin: `mvn docker:start`
 Stream the logs: `mvn docker:logs -Ddocker.follow`  
 Stop the docker container: `mvn docker:stop`  
 Then go to *[http://DOCKER_HOST:8080](http://DOCKER_HOST:8080)*   
+Or customize the number of previews (4x4 by default) to 10x10 as following: *[http://localhost:8080?rows=10&cols=10](http://localhost:8080?rows=10&cols=10)*  
 
 ### How to setup keys (mandatory step if not passing keys at run time)
 Generate your own [twitter application keys](https://dev.twitter.com/apps/new). Then update `app.properties` with your keys and the search terms.

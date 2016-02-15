@@ -93,7 +93,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /* line 24, ../sass/screen.sass */
 #content {
-  margin: 0 40px 40px 280px;
+  margin: 0 2% 0 2%;
 }
 
 /* line 27, ../sass/screen.sass */
@@ -782,7 +782,7 @@ color: #ff35a4; /*BII E6007E*/
 
   /* line 398, ../sass/screen.sass */
   #content {
-    margin-left: 200px;
+    margin-left: 40px;
   }
 }
 @media only screen and (max-width: 700px) {

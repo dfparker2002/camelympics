@@ -36,8 +36,8 @@ import twitter4j.MediaEntity;
 import twitter4j.Status;
 
 public final class MainApp {
-    private static long tweetCount = 0L;
-    private static long imageCount = 0L;
+    private static long tweetCount;
+    private static long imageCount;
 
     public static void main(String[] args) throws Exception {
         System.out.println("___________________Camelympics___________________");
@@ -60,6 +60,7 @@ public final class MainApp {
                 throttlerPool.setRejectedPolicy(ThreadPoolRejectedPolicy.Discard);
                 throttlerPool.setMaxQueueSize(10);
                 throttlerPool.setMaxPoolSize(2);
+                throttlerPool.setPoolSize(2);
                 getContext().getExecutorServiceManager().registerThreadPoolProfile(throttlerPool);
                 getContext().getShutdownStrategy().setTimeout(1);
 
@@ -83,7 +84,8 @@ public final class MainApp {
                                                         .withText(status.getText())
                                                         .withCount(tweetCount)
                                                         .withImageCount(imageCount)
-                                                        .withImageUrl(mediaEntity.getMediaURL().toString())
+                                                        .withTweetUrl(mediaEntity.getDisplayURL().toString())
+                                                        .withImageUrl(mediaEntity.getMediaURLHttps().toString())
                                         );
 
                                         exchange.getIn().setHeader("UNIQUE_IMAGE_URL", mediaEntity.getMediaURL().toString());
@@ -97,7 +99,7 @@ public final class MainApp {
 
                     .idempotentConsumer(header("UNIQUE_IMAGE_URL"), MemoryIdempotentRepository.memoryIdempotentRepository(10000))
 
-                    .throttle(1).timePeriodMillis(700).asyncDelayed().executorServiceRef("throttlerPool")
+                    .throttle(1).timePeriodMillis(500).asyncDelayed().executorServiceRef("throttlerPool")
 
                     .marshal().json(JsonLibrary.Jackson).convertBodyTo(String.class)
 
@@ -111,7 +113,8 @@ public final class MainApp {
     static class Tweet {
         private String name;
         private String text;
-        private String url;
+        private String imageUrl;
+        private String tweetUrl;
         private long tweetCount;
         private long imageCount;
 
@@ -125,8 +128,13 @@ public final class MainApp {
             return this;
         }
 
-        public Tweet withImageUrl(String url) {
-            this.url = url;
+        public Tweet withImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public Tweet withTweetUrl(String tweetUrl) {
+            this.tweetUrl = tweetUrl;
             return this;
         }
 
@@ -157,7 +165,11 @@ public final class MainApp {
         }
 
         public String getUrl() {
-            return url;
+            return imageUrl;
+        }
+
+        public String getTweetUrl() {
+            return tweetUrl;
         }
 
         @Override
@@ -165,7 +177,8 @@ public final class MainApp {
             return "Tweet{" +
                     "name='" + name + '\'' +
                     ", text='" + text + '\'' +
-                    ", url='" + url + '\'' +
+                    ", imageUrl='" + imageUrl + '\'' +
+                    ", tweetUrl='" + tweetUrl + '\'' +
                     ", tweetCount=" + tweetCount +
                     ", imageCount=" + imageCount +
                     '}';
