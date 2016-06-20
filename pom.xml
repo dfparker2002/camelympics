@@ -7,11 +7,12 @@
     <artifactId>camelympics</artifactId>
     <version>1.0</version>
 
-    <name>A Camel based application for streaming photos form twitter</name>
+    <name>Camel Twitter Image Streamer</name>
+    <description>Minimalistic Apache Camel based Twitter photo streaming application</description>
     <url>http://www.ofbizian.com</url>
 
     <properties>
-        <camel.version>2.16.2</camel.version>
+        <camel.version>2.17.1</camel.version>
         <docker.port>8080</docker.port>
     </properties>
 
@@ -53,8 +54,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -92,11 +93,10 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
-                <groupId>org.jolokia</groupId>
+                <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.13.8</version>
+                <version>0.15.7</version>
                 <configuration>
                     <logDate>default</logDate>
                     <autoPull>true</autoPull>
@@ -107,7 +107,7 @@
                             <build>
                                 <cleanup>false</cleanup>
                                 <from>java:8u40</from>
-                                <maintainer>bibryam</maintainer>
+                                <maintainer>Bilgin Ibryam</maintainer>
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>

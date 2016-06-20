@@ -592,7 +592,7 @@ margin-bottom: 0.2em;
 color: #ff35a4; /*BII E6007E*/
 }
 .section {
-  padding: 10px 0;  /*BII from 40 to 10*/
+  padding: 0px 0;  /*BII from 40 to 10*/
 }
 
 .imageRow .single a.loading {
