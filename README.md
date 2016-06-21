@@ -41,9 +41,9 @@ If you have an OpenShift instance available, use the following commands:
 
     oc new-app bibryam/camelympics:latest \
     -e consumerKey="KEY" \ 
-    -e consumerSecret="SECRET" \  
+    -e consumerSecret="SECRET" \
     -e accessToken="TOKEN" \
-     -e accessTokenSecret="TOKEN_SECRET" \
+    -e accessTokenSecret="TOKEN_SECRET" \
      -e searchTerm="your search term, for example: euro2016"
 
     oc expose svc camelympics
