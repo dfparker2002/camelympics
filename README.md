@@ -11,15 +11,14 @@ Read more about the app on my [blog](http://www.ofbizian.com/search?q=camelympic
 ### How to run using Docker
 The application is compiled and available at *[Docker Hub](https://hub.docker.com/r/bibryam/camelympics/)*.
 Run the image using your own Twitter keys and preferred search term. For example:
-```
-docker run 
--e "consumerKey=83VYApZjhdkKJHDa3qq2dq" 
--e "consumerSecret=M00Lzd5XsHnvnRpips0LSKJDLSKJDLSKJDSApy1GFB9JjNhu" 
--e "accessToken=19341814-3592zsZ1LKAJDLSAKDJVB8Z2FvNweYA0nfHACO" 
--e "accessTokenSecret=ZBk0yIqjaBbWLAKSjdlskjdkLAKohve9wvgZj2XysiTo" 
--e "searchTerm=euro2016,sport"
---rm -p 8080:8080 bibryam/camelympics:latest
-```
+
+    docker run
+    -e "consumerKey=83VYApZjhdkKJHDa3qq2dq"
+    -e "consumerSecret=M00Lzd5XsHnvnRpips0LSKJDLSKJDLSKJDSApy1GFB9JjNhu"
+    -e "accessToken=19341814-3592zsZ1LKAJDLSAKDJVB8Z2FvNweYA0nfHACO"
+    -e "accessTokenSecret=ZBk0yIqjaBbWLAKSjdlskjdkLAKohve9wvgZj2XysiTo"
+    -e "searchTerm=euro2016,sport"
+    --rm -p 8080:8080 bibryam/camelympics:latest
 
 Then go to *[http://DOCKER_HOST:8080](http://DOCKER_HOST:8080)*   
 To have a larger number of previews images (which is 4x4 by default) for example 50x7 use following URL params: *[http://DOCKER_HOST:8080?rows=50&cols=7](http://DOCKER_HOST:8080?rows=50&cols=7)*
@@ -35,7 +34,7 @@ To have a larger number of previews images (which is 4x4 by default) for example
 ### How to run on Red Hat OpenShift
 If you have an OpenShift instance available, use the following commands:
 
-'''
+
     oc new-project camelympics
 
     oc login https://OPENSHIFT_HOST --token=YOUR_TOKEN
@@ -48,9 +47,6 @@ If you have an OpenShift instance available, use the following commands:
      -e searchTerm="your search term, for example: euro2016"
 
     oc expose svc camelympics
-'''
-
-### How to :
 
 ### Other notes
  - To generate Twitter keys go to [here](https://dev.twitter.com/apps/new). Then update `app.properties` and compile the application, or simply pass the keys as environment variables. Notice that the docker containers on docker hub always expect environment variables and override the `app.properties`.
