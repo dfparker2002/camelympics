@@ -32,7 +32,7 @@ To have a larger number of previews images (which is 4x4 by default) for example
 
 
 ### How to run on Red Hat OpenShift
-If you have an OpenShift instance available, use the following commands:
+If you have an *[OpenShift Online account](https://www.openshift.com/)*, use the following commands:
 
 
     oc new-project camelympics
@@ -51,7 +51,7 @@ If you have an OpenShift instance available, use the following commands:
 ### Other notes
  - To generate Twitter keys go to [here](https://dev.twitter.com/apps/new). Then update `app.properties` and compile the application, or simply pass the keys as environment variables. Notice that the docker containers on docker hub always expect environment variables and override the `app.properties`.
 
- - The application can run on any platform that supports docker containers, such as *[Digital Ocean](www.digitalocean.com)* or *[Google Compute Engine](https://cloud.google.com/compute).
+ - The application can run on any platform that supports docker containers, such as *[Digital Ocean](www.digitalocean.com)* or *[Google Compute Engine](https://cloud.google.com/compute)*.
 
  - The Camel application has a filter to discard possibly sensitive and NSFW content, but it is not always working as expected with a real time photo stream. Use this at your own risk!!!
 
