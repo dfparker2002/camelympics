@@ -1,53 +1,63 @@
 # Camelympics
 A minimalistic Apache Camel application (one Java class with 150 lines) that streams live Twitter photos.
 
-### Screenshot 
-Read more about the app on my [blog](http://www.ofbizian.com/2012/08/olympics-image-loader-powered-by-camel.html)
 
+### Screenshot 
 ![A screenshot of the application](https://3.bp.blogspot.com/-6HJJ93qqWRo/VraLUqWYx9I/AAAAAAAAD7g/v46Z4IV5OIw/s1600/live_twitter_photo_stream.png)
 
-### How to run with Maven
-If you have Maven and Git installed that is the easiest way to run this application.   
-Clone the project and update `app.properties` as described below.  
-Then compile and run the app with the following command: `mvn clean compile exec:java`   
-Then go to *[http://localhost:8080](http://localhost:8080)*  
-Or customize the number of previews (4x4 by default) to 10x10 as following: *[http://localhost:8080?rows=10&cols=10](http://localhost:8080?rows=10&cols=10)*  
+Read more about the app on my [blog](http://www.ofbizian.com/search?q=camelympics)
 
-### How to run with Docker
-If you have a docker installed, you can directly poll the docker image from *[Docker Hub](https://hub.docker.com/r/bibryam/camelympics/)* and run the application without compiling.  
-If you prefer, you can first pull the docker image: `docker pull bibryam/camelympics:1.0`  
-Run the image using your own Twitter keys and preferred search term. For example:  
+
+### How to run using Docker
+The application is compiled and available at *[Docker Hub](https://hub.docker.com/r/bibryam/camelympics/)*.
+Run the image using your own Twitter keys and preferred search term. For example:
 ```
 docker run 
 -e "consumerKey=83VYApZjhdkKJHDa3qq2dq" 
 -e "consumerSecret=M00Lzd5XsHnvnRpips0LSKJDLSKJDLSKJDSApy1GFB9JjNhu" 
 -e "accessToken=19341814-3592zsZ1LKAJDLSAKDJVB8Z2FvNweYA0nfHACO" 
 -e "accessTokenSecret=ZBk0yIqjaBbWLAKSjdlskjdkLAKohve9wvgZj2XysiTo" 
--e "searchTerm=sport,football,soccer,cricket,hockey,tennis,volleyball,baseball,golf,basketball" 
---rm -p 8080:8080 bibryam/camelympics:1.0
+-e "searchTerm=euro2016,sport"
+--rm -p 8080:8080 bibryam/camelympics:latest
 ```
 
 Then go to *[http://DOCKER_HOST:8080](http://DOCKER_HOST:8080)*   
-Or customize the number of previews (4x4 by default) to 10x10 as following: *[http://localhost:8080?rows=10&cols=10](http://localhost:8080?rows=10&cols=10)*  
+To have a larger number of previews images (which is 4x4 by default) for example 50x7 use following URL params: *[http://DOCKER_HOST:8080?rows=50&cols=7](http://DOCKER_HOST:8080?rows=50&cols=7)*
 
-### How to run with Maven Docker Plugin
-An alternative flow is to build your docker image using Maven plugin. Clone the project, update `app.properties`  and then build docker images through the configured maven plugin: `mvn package docker:build`  
-Run the Docker container through maven plugin: `mvn docker:start`  
-Stream the logs: `mvn docker:logs -Ddocker.follow`  
-Stop the docker container: `mvn docker:stop`  
-Then go to *[http://DOCKER_HOST:8080](http://DOCKER_HOST:8080)*   
-Or customize the number of previews (4x4 by default) to 10x10 as following: *[http://localhost:8080?rows=10&cols=10](http://localhost:8080?rows=10&cols=10)*  
 
-### How to setup keys (mandatory step if not passing keys at run time)
-Generate your own [twitter application keys](https://dev.twitter.com/apps/new). Then update `app.properties` with your keys and the search terms.
-```
-consumerKey=key
-consumerSecret=secret
-accessToken=token
-accessTokenSecret=tokenSecret
-searchTerm=sport,football,soccer,cricket,hockey,tennis,volleyball,baseball,golf,basketball
-```
-Rather than updating the file, you can also pass those values as environment variables to the JVM.  
+### How to run locally with Maven
+Clone the project and update `app.properties` as described below.
+Then compile and run the app with the following command: `mvn clean compile exec:java`
+Then go to *[http://localhost:8080](http://localhost:8080)*
+To have a larger number of previews images (which is 4x4 by default) for example 50x7 use following URL params: *[http://localhost:8080?rows=50&cols=7](http://localhost:8080?rows=50&cols=7)*
+
+
+### How to run on Red Hat OpenShift
+If you have an OpenShift instance available, use the following commands:
+
+'''
+    oc new-project camelympics
+
+    oc login https://OPENSHIFT_HOST --token=YOUR_TOKEN
+
+    oc new-app bibryam/camelympics:latest \
+    -e consumerKey="KEY" \ 
+    -e consumerSecret="SECRET" \  
+    -e accessToken="TOKEN" \
+     -e accessTokenSecret="TOKEN_SECRET" \
+     -e searchTerm="your search term, for example: euro2016"
+
+    oc expose svc camelympics
+'''
+
+### How to :
+
+### Other notes
+ - To generate Twitter keys go to [here](https://dev.twitter.com/apps/new). Then update `app.properties` and compile the application, or simply pass the keys as environment variables. Notice that the docker containers on docker hub always expect environment variables and override the `app.properties`.
+
+ - The application can run on any platform that supports docker containers, such as *[Digital Ocean](www.digitalocean.com)* or *[Google Compute Engine](https://cloud.google.com/compute).
+
+ - The Camel application has a filter to discard possibly sensitive and NSFW content, but it is not always working as expected with a real time photo stream. Use this at your own risk!!!
 
 ### License
 Camelympics is licensed under The MIT License.  
