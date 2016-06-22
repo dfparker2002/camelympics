@@ -48,9 +48,17 @@ If you have an *[OpenShift Online account](https://www.openshift.com/)*, use the
 
     oc expose svc camelympics
 
-### Other notes
- - To generate Twitter keys go to [here](https://dev.twitter.com/apps/new). Then update `app.properties` and compile the application, or simply pass the keys as environment variables. Notice that the docker container on docker hub always expects environment variables and overrides the `app.properties`.
+### Generating Twitter keys
+ - To generate Twitter consumer keys and accessToken, go to *[here](https://dev.twitter.com/apps)*, Create New App, and generate Access Token.
 
+ - Then update `app.properties` and compile the application, or simply pass the keys as environment variables.
+
+ - Notice that the docker container on docker hub always expects environment variables and overrides the `app.properties`. So when using Docker, there is no need to update `app.properties`, instead pass the keys as environment variables.
+
+ ![Here are the keys that are needed](https://3.bp.blogspot.com/-i8ZM3Qg4pSc/V2pt5EuSxkI/AAAAAAAAE_w/aydPXyfWki0D5uJgSgn2uYg2l1RbZR_fwCLcB/s1600/Screen%2BShot%2B2016-06-22%2Bat%2B11.48.21.png)
+
+
+### Other notes
  - The application can run on any platform that supports docker containers, such as *[Digital Ocean](www.digitalocean.com)* or *[Google Compute Engine](https://cloud.google.com/compute)*.
 
  - The Camel application has a filter to discard possibly sensitive and **NSFW content**, but it is not always working as expected with a real time photo stream. **Use this at your own risk!!!**
