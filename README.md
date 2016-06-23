@@ -35,16 +35,16 @@ To have a larger number of previews images (which is 4x4 by default) for example
 If you have an *[OpenShift Online account](https://www.openshift.com/)*, use the following commands:
 
 
-    oc new-project camelympics
-
     oc login https://OPENSHIFT_HOST --token=YOUR_TOKEN
+
+    oc new-project camelympics
 
     oc new-app bibryam/camelympics:latest \
     -e consumerKey="KEY" \ 
     -e consumerSecret="SECRET" \
     -e accessToken="TOKEN" \
     -e accessTokenSecret="TOKEN_SECRET" \
-     -e searchTerm="your search term, for example: euro2016"
+    -e searchTerm="your search term, for example: euro2016"
 
     oc expose svc camelympics
 
