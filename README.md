@@ -1,6 +1,6 @@
 # Camelympics
-A minimalistic Apache Camel application (one Java class with 150 lines) that streams live Twitter photos.
-
+A minimalistic Apache Camel application (one Java class with 150 lines) that streams live Twitter photos.  
+See live demo streaming Euro2016 photos *[here](http://camelympics.ofbizian.com/?rows=3&cols=3)*  
 
 ### Screenshot 
 ![A screenshot of the application](https://3.bp.blogspot.com/-6HJJ93qqWRo/VraLUqWYx9I/AAAAAAAAD7g/v46Z4IV5OIw/s1600/live_twitter_photo_stream.png)
@@ -32,7 +32,7 @@ To have a larger number of previews images (which is 4x4 by default) for example
 
 
 ### How to run on Red Hat OpenShift
-If you have an *[OpenShift Online account](https://www.openshift.com/)*, use the following commands:
+If you have an *[OpenShift Online dev preview](https://www.openshift.com/devpreview/)*, use the following commands:
 
 
     oc login https://OPENSHIFT_HOST --token=YOUR_TOKEN
