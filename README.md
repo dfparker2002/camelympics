@@ -1,6 +1,8 @@
 # Camelympics
 A minimalistic Apache Camel application (one Java class with 150 lines) that streams live Twitter photos.  
-See live demo streaming Euro2016 photos *[here](http://camelympics.ofbizian.com/?rows=3&cols=3)*  
+
+### Demo 
+See live demo streaming Euro2016 photos *[camelympics.ofbizian.com](http://camelympics.ofbizian.com/?rows=3&cols=3)*  
 
 ### Screenshot 
 ![A screenshot of the application](https://3.bp.blogspot.com/-6HJJ93qqWRo/VraLUqWYx9I/AAAAAAAAD7g/v46Z4IV5OIw/s1600/live_twitter_photo_stream.png)
